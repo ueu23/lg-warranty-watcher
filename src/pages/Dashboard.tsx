@@ -2,7 +2,8 @@ import { useState } from "react";
 import { ProductRegistrationForm } from "@/components/ProductRegistrationForm";
 import { WarrantyDashboard } from "@/components/WarrantyDashboard";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Shield, Package, Bell } from "lucide-react";
+import { Package, Bell } from "lucide-react";
+import Navbar from "@/components/Navbar";
 
 interface Product {
   id: string;
@@ -14,7 +15,7 @@ interface Product {
   serialNumber: string;
 }
 
-const Index = () => {
+const Dashboard = () => {
   const [products, setProducts] = useState<Product[]>([]);
 
   const handleProductAdded = (product: Product) => {
@@ -23,19 +24,8 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-secondary">
-      {/* Header */}
-      <header className="bg-gradient-to-r from-primary to-lg-red-light text-primary-foreground shadow-[var(--shadow-elegant)]">
-        <div className="container mx-auto px-4 py-6">
-          <div className="flex items-center gap-3">
-            <Shield className="h-8 w-8" />
-            <div>
-              <h1 className="text-3xl font-bold">LG Warranty Tracker</h1>
-              <p className="text-primary-foreground/80">Keep track of your LG product warranties</p>
-            </div>
-          </div>
-        </div>
-      </header>
-
+      <Navbar />
+      
       {/* Main Content */}
       <main className="container mx-auto px-4 py-8">
         <Tabs defaultValue="dashboard" className="space-y-6">
@@ -59,17 +49,8 @@ const Index = () => {
           </TabsContent>
         </Tabs>
       </main>
-
-      {/* Footer */}
-      <footer className="bg-muted mt-16">
-        <div className="container mx-auto px-4 py-8 text-center">
-          <p className="text-muted-foreground">
-            © 2024 LG Warranty Tracker. Stay protected with timely warranty reminders.
-          </p>
-        </div>
-      </footer>
     </div>
   );
 };
 
-export default Index;
+export default Dashboard;

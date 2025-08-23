@@ -1,0 +1,56 @@
+import { Link, useLocation } from "react-router-dom";
+import { Shield } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+
+const Navbar = () => {
+  const location = useLocation();
+
+  const navItems = [
+    { name: "Home", path: "/" },
+    { name: "Dashboard", path: "/dashboard" },
+    { name: "Support", path: "/support" },
+  ];
+
+  return (
+    <nav className="bg-card border-b border-border sticky top-0 z-50 backdrop-blur-sm bg-card/95">
+      <div className="container mx-auto px-4">
+        <div className="flex items-center justify-between h-16">
+          <Link to="/" className="flex items-center gap-3">
+            <Shield className="h-8 w-8 text-primary" />
+            <div>
+              <h1 className="text-xl font-bold text-foreground">LG Warranty Manager</h1>
+            </div>
+          </Link>
+
+          <div className="hidden md:flex items-center space-x-8">
+            {navItems.map((item) => (
+              <Link
+                key={item.path}
+                to={item.path}
+                className={cn(
+                  "text-sm font-medium transition-colors hover:text-primary",
+                  location.pathname === item.path
+                    ? "text-primary"
+                    : "text-muted-foreground"
+                )}
+              >
+                {item.name}
+              </Link>
+            ))}
+          </div>
+
+          <div className="flex items-center gap-4">
+            <Link to="/dashboard">
+              <Button variant="default" size="sm">
+                Get Started
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </div>
+    </nav>
+  );
+};
+
+export default Navbar;
