@@ -13,6 +13,7 @@ interface Product {
   purchaseDate: string;
   warrantyPeriod: number;
   serialNumber: string;
+  email: string;
 }
 
 const Dashboard = () => {

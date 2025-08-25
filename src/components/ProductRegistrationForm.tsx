@@ -15,6 +15,7 @@ interface Product {
   purchaseDate: string;
   warrantyPeriod: number;
   serialNumber: string;
+  email: string;
 }
 
 interface ProductRegistrationFormProps {
@@ -47,14 +48,15 @@ export const ProductRegistrationForm = ({ onProductAdded }: ProductRegistrationF
     purchaseDate: "",
     warrantyPeriod: "",
     serialNumber: "",
+    email: "",
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!formData.productName || !formData.category || !formData.purchaseDate || !formData.warrantyPeriod) {
+    if (!formData.productName || !formData.category || !formData.purchaseDate || !formData.warrantyPeriod || !formData.email) {
       toast({
-        title: "Missing Information",
+        title: "Missing Information", 
         description: "Please fill in all required fields.",
         variant: "destructive",
       });
@@ -69,6 +71,7 @@ export const ProductRegistrationForm = ({ onProductAdded }: ProductRegistrationF
       purchaseDate: formData.purchaseDate,
       warrantyPeriod: parseInt(formData.warrantyPeriod),
       serialNumber: formData.serialNumber,
+      email: formData.email,
     };
 
     onProductAdded(newProduct);
@@ -80,6 +83,7 @@ export const ProductRegistrationForm = ({ onProductAdded }: ProductRegistrationF
       purchaseDate: "",
       warrantyPeriod: "",
       serialNumber: "",
+      email: "",
     });
 
     toast({
@@ -176,6 +180,18 @@ export const ProductRegistrationForm = ({ onProductAdded }: ProductRegistrationF
                   ))}
                 </SelectContent>
               </Select>
+            </div>
+
+            <div className="space-y-2 md:col-span-2">
+              <Label htmlFor="email">Email Address *</Label>
+              <Input
+                id="email"
+                type="email"
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                placeholder="e.g., john.doe@example.com"
+                className="transition-all duration-300 focus:shadow-[var(--shadow-elegant)]"
+              />
             </div>
           </div>
 
