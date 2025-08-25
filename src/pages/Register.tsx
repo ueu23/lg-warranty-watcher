@@ -51,12 +51,12 @@ const Register = () => {
     // Mock registration - would connect to Supabase authentication
     toast({
       title: "Registration Successful",
-      description: "Account created! Redirecting to dashboard... (Mock registration - connect Supabase for real authentication)",
+      description: "Account created! Redirecting to portal... (Mock registration - connect Supabase for real authentication)",
     });
     
     // Mock redirect after short delay
     setTimeout(() => {
-      navigate('/dashboard');
+      navigate('/portal');
     }, 1500);
   };
 

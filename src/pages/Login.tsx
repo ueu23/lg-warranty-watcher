@@ -30,12 +30,12 @@ const Login = () => {
     // Mock login - would connect to Supabase authentication
     toast({
       title: "Login Successful",
-      description: "Redirecting to dashboard... (Mock login - connect Supabase for real authentication)",
+      description: "Redirecting to portal... (Mock login - connect Supabase for real authentication)",
     });
     
     // Mock redirect after short delay
     setTimeout(() => {
-      navigate('/dashboard');
+      navigate('/portal');
     }, 1500);
   };
 

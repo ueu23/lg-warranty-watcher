@@ -9,6 +9,11 @@ import Dashboard from "./pages/Dashboard";
 import Support from "./pages/Support";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Portal from "./pages/Portal";
+import PortalDashboard from "./pages/portal/PortalDashboard";
+import UserDetails from "./pages/portal/UserDetails";
+import Products from "./pages/portal/Products";
+import Help from "./pages/portal/Help";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -25,6 +30,13 @@ const App = () => (
           <Route path="/support" element={<Support />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/portal" element={<Portal />}>
+            <Route index element={<PortalDashboard />} />
+            <Route path="dashboard" element={<PortalDashboard />} />
+            <Route path="user-details" element={<UserDetails />} />
+            <Route path="products" element={<Products />} />
+            <Route path="help" element={<Help />} />
+          </Route>
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
