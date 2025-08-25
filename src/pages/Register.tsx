@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -8,6 +8,7 @@ import { toast } from "@/hooks/use-toast";
 import { Eye, EyeOff, Mail, Lock, User } from "lucide-react";
 
 const Register = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -49,10 +50,14 @@ const Register = () => {
 
     // Mock registration - would connect to Supabase authentication
     toast({
-      title: "Registration Attempted",
-      description: "Registration functionality requires Supabase integration to work properly.",
-      variant: "destructive",
+      title: "Registration Successful",
+      description: "Account created! Redirecting to dashboard... (Mock registration - connect Supabase for real authentication)",
     });
+    
+    // Mock redirect after short delay
+    setTimeout(() => {
+      navigate('/dashboard');
+    }, 1500);
   };
 
   return (

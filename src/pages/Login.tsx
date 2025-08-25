@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -8,6 +8,7 @@ import { toast } from "@/hooks/use-toast";
 import { Eye, EyeOff, Mail, Lock } from "lucide-react";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -28,10 +29,14 @@ const Login = () => {
 
     // Mock login - would connect to Supabase authentication
     toast({
-      title: "Login Attempted",
-      description: "Login functionality requires Supabase integration to work properly.",
-      variant: "destructive",
+      title: "Login Successful",
+      description: "Redirecting to dashboard... (Mock login - connect Supabase for real authentication)",
     });
+    
+    // Mock redirect after short delay
+    setTimeout(() => {
+      navigate('/dashboard');
+    }, 1500);
   };
 
   return (
