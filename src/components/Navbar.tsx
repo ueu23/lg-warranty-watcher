@@ -1,6 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { cn } from "@/lib/utils";
 
 const Navbar = () => {
@@ -41,6 +42,7 @@ const Navbar = () => {
           </div>
 
           <div className="flex items-center gap-4">
+            <ThemeToggle />
             <Link to="/login">
               <Button variant="outline" size="sm">
                 Sign In
