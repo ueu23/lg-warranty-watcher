@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { ProductRegistrationForm } from "@/components/ProductRegistrationForm";
 import { WarrantyDashboard } from "@/components/WarrantyDashboard";
+import ReminderSettings from "@/components/ReminderSettings";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Package, Plus } from "lucide-react";
+import { Package, Plus, Bell } from "lucide-react";
 
 interface Product {
   id: string;
@@ -32,7 +33,7 @@ const Products = () => {
       </div>
 
       <Tabs defaultValue="products" className="space-y-6">
-        <TabsList className="grid w-full grid-cols-2 max-w-md">
+        <TabsList className="grid w-full grid-cols-3 max-w-lg">
           <TabsTrigger value="products" className="flex items-center gap-2">
             <Package className="h-4 w-4" />
             My Products
@@ -40,6 +41,10 @@ const Products = () => {
           <TabsTrigger value="register" className="flex items-center gap-2">
             <Plus className="h-4 w-4" />
             Add Product
+          </TabsTrigger>
+          <TabsTrigger value="reminders" className="flex items-center gap-2">
+            <Bell className="h-4 w-4" />
+            Reminders
           </TabsTrigger>
         </TabsList>
 
@@ -49,6 +54,10 @@ const Products = () => {
 
         <TabsContent value="register">
           <ProductRegistrationForm onProductAdded={handleProductAdded} />
+        </TabsContent>
+
+        <TabsContent value="reminders">
+          <ReminderSettings />
         </TabsContent>
       </Tabs>
     </div>
