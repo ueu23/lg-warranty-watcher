@@ -13,6 +13,7 @@ import Portal from "./pages/Portal";
 import PortalDashboard from "./pages/portal/PortalDashboard";
 import UserDetails from "./pages/portal/UserDetails";
 import Products from "./pages/portal/Products";
+import Customers from "./pages/portal/Customers";
 import Help from "./pages/portal/Help";
 import NotFound from "./pages/NotFound";
 
@@ -35,6 +36,7 @@ const App = () => (
             <Route path="dashboard" element={<PortalDashboard />} />
             <Route path="user-details" element={<UserDetails />} />
             <Route path="products" element={<Products />} />
+            <Route path="customers" element={<Customers />} />
             <Route path="help" element={<Help />} />
           </Route>
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

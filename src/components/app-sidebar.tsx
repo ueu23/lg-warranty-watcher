@@ -1,4 +1,4 @@
-import { User, Package, BarChart3, HelpCircle } from "lucide-react";
+import { User, Package, BarChart3, HelpCircle, Users } from "lucide-react";
 import { NavLink, useLocation } from "react-router-dom";
 
 import {
@@ -16,6 +16,7 @@ const items = [
   { title: "Dashboard", url: "/portal/dashboard", icon: BarChart3 },
   { title: "User Details", url: "/portal/user-details", icon: User },
   { title: "Product Details", url: "/portal/products", icon: Package },
+  { title: "Customers", url: "/portal/customers", icon: Users },
   { title: "Help", url: "/portal/help", icon: HelpCircle },
 ];
 
