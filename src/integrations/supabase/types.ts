@@ -14,7 +14,128 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      customers: {
+        Row: {
+          created_at: string
+          email: string | null
+          id: string
+          name: string
+          phone_number: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          id?: string
+          name: string
+          phone_number: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          id?: string
+          name?: string
+          phone_number?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      reminder_logs: {
+        Row: {
+          customer_id: string
+          days_before_expiry: number
+          id: string
+          message: string | null
+          sent_at: string
+          status: string
+          warranty_item_id: string
+        }
+        Insert: {
+          customer_id: string
+          days_before_expiry: number
+          id?: string
+          message?: string | null
+          sent_at?: string
+          status: string
+          warranty_item_id: string
+        }
+        Update: {
+          customer_id?: string
+          days_before_expiry?: number
+          id?: string
+          message?: string | null
+          sent_at?: string
+          status?: string
+          warranty_item_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reminder_logs_customer_id_fkey"
+            columns: ["customer_id"]
+            isOneToOne: false
+            referencedRelation: "customers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "reminder_logs_warranty_item_id_fkey"
+            columns: ["warranty_item_id"]
+            isOneToOne: false
+            referencedRelation: "warranty_items"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      warranty_items: {
+        Row: {
+          created_at: string
+          customer_id: string
+          expiry_date: string
+          id: string
+          product_name: string
+          purchase_date: string
+          serial_number: string | null
+          updated_at: string
+          user_id: string
+          warranty_period_months: number
+        }
+        Insert: {
+          created_at?: string
+          customer_id: string
+          expiry_date: string
+          id?: string
+          product_name: string
+          purchase_date: string
+          serial_number?: string | null
+          updated_at?: string
+          user_id: string
+          warranty_period_months: number
+        }
+        Update: {
+          created_at?: string
+          customer_id?: string
+          expiry_date?: string
+          id?: string
+          product_name?: string
+          purchase_date?: string
+          serial_number?: string | null
+          updated_at?: string
+          user_id?: string
+          warranty_period_months?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "warranty_items_customer_id_fkey"
+            columns: ["customer_id"]
+            isOneToOne: false
+            referencedRelation: "customers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
