@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -6,16 +6,30 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "@/hooks/use-toast";
 import { Eye, EyeOff, Mail, Lock } from "lucide-react";
+import { useAuth } from '@/contexts/AuthContext';
 
 const Login = () => {
   const navigate = useNavigate();
+  const { signIn, user, isAdmin } = useAuth();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  useEffect(() => {
+    if (user) {
+      // Redirect based on role
+      if (isAdmin) {
+        navigate('/admin');
+      } else {
+        navigate('/portal');
+      }
+    }
+  }, [user, isAdmin, navigate]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!formData.email || !formData.password) {
@@ -27,16 +41,25 @@ const Login = () => {
       return;
     }
 
-    // Mock login - would connect to Supabase authentication
+    setIsLoading(true);
+
+    const { error } = await signIn(formData.email, formData.password);
+    
+    setIsLoading(false);
+
+    if (error) {
+      toast({
+        title: "Login Failed",
+        description: error.message || "Invalid email or password",
+        variant: "destructive",
+      });
+      return;
+    }
+
     toast({
       title: "Login Successful",
-      description: "Redirecting to portal... (Mock login - connect Supabase for real authentication)",
+      description: "Welcome back!",
     });
-    
-    // Mock redirect after short delay
-    setTimeout(() => {
-      navigate('/portal');
-    }, 1500);
   };
 
   return (
@@ -89,9 +112,10 @@ const Login = () => {
 
             <Button 
               type="submit" 
+              disabled={isLoading}
               className="w-full bg-gradient-to-r from-primary to-lg-red-light hover:from-lg-red-light hover:to-primary transition-all duration-300 shadow-[var(--shadow-elegant)] hover:shadow-lg"
             >
-              Sign In
+              {isLoading ? "Signing In..." : "Sign In"}
             </Button>
           </form>
 
@@ -107,11 +131,6 @@ const Login = () => {
             </p>
           </div>
 
-          <div className="mt-4 p-3 bg-muted/50 rounded-lg">
-            <p className="text-xs text-muted-foreground text-center">
-              ⚠️ This is a UI mockup. Connect to Supabase for full authentication functionality.
-            </p>
-          </div>
         </CardContent>
       </Card>
     </div>

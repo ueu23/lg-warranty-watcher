@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -6,9 +6,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "@/hooks/use-toast";
 import { Eye, EyeOff, Mail, Lock, User } from "lucide-react";
+import { useAuth } from '@/contexts/AuthContext';
 
 const Register = () => {
   const navigate = useNavigate();
+  const { signUp, user } = useAuth();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -17,8 +19,15 @@ const Register = () => {
   });
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  useEffect(() => {
+    if (user) {
+      navigate('/portal');
+    }
+  }, [user, navigate]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!formData.name || !formData.email || !formData.password || !formData.confirmPassword) {
@@ -48,16 +57,25 @@ const Register = () => {
       return;
     }
 
-    // Mock registration - would connect to Supabase authentication
+    setIsLoading(true);
+
+    const { error } = await signUp(formData.email, formData.password, formData.name);
+    
+    setIsLoading(false);
+
+    if (error) {
+      toast({
+        title: "Registration Failed",
+        description: error.message || "Could not create account. Please try again.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     toast({
       title: "Registration Successful",
-      description: "Account created! Redirecting to portal... (Mock registration - connect Supabase for real authentication)",
+      description: "Your account has been created!",
     });
-    
-    // Mock redirect after short delay
-    setTimeout(() => {
-      navigate('/portal');
-    }, 1500);
   };
 
   return (
@@ -147,9 +165,10 @@ const Register = () => {
 
             <Button 
               type="submit" 
+              disabled={isLoading}
               className="w-full bg-gradient-to-r from-primary to-lg-red-light hover:from-lg-red-light hover:to-primary transition-all duration-300 shadow-[var(--shadow-elegant)] hover:shadow-lg"
             >
-              Create Account
+              {isLoading ? "Creating Account..." : "Create Account"}
             </Button>
           </form>
 
@@ -165,11 +184,6 @@ const Register = () => {
             </p>
           </div>
 
-          <div className="mt-4 p-3 bg-muted/50 rounded-lg">
-            <p className="text-xs text-muted-foreground text-center">
-              ⚠️ This is a UI mockup. Connect to Supabase for full authentication functionality.
-            </p>
-          </div>
         </CardContent>
       </Card>
     </div>
